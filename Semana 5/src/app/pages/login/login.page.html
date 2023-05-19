@@ -1,0 +1,19 @@
+<ion-content class="ion-padding" [fullscreen]="true">
+  <!-- #LoginForm="ngForm" hace que el formulario se comporte dentro del contexto de Angular -->
+  <!-- (ngSubmit)="login()" es un evento de Submit de Angular, al cual se le asignó la función login() -->
+  <form #LoginForm="ngForm" (ngSubmit)="login()">
+    <ion-item>
+      <!-- [(ngModel)]="credentials.username" es la variable en la cual se almacenará el valor ingresado
+      en el input por el usuario. Todos los inputs deben de tener el atributo name -->
+      <ion-input name="username" [(ngModel)]="credentials.username" label="Nombre de usuario" labelPlacement="stacked" placeholder="Ingresa tu nombre de usuario"></ion-input>
+    </ion-item>
+    <ion-item>
+      <!-- type="password" hace referencia a que lo que se escriba dentro del input será una contraseña
+      y por ende, se "censurará" con * -->
+      <ion-input name="password" [(ngModel)]="credentials.password" type="password" label="Contraseña" labelPlacement="stacked" placeholder="******"></ion-input>
+    </ion-item>
+    <ion-button type="submit" expand="block" fill="clear" shape="round">
+      Ingresar
+    </ion-button>
+  </form>
+</ion-content>
