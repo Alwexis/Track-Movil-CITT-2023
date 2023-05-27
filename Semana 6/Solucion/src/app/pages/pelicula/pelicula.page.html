@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Volver" icon="caret-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>pelicula</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <section id="contenedor-imagen">
+    <ion-img src="{{ pelicula.poster }}"></ion-img>
+  </section>
+  <section id="contenedor-informacion">
+    <span class="titulo">{{ pelicula.titulo }}</span>
+    <div class="contenedor-info-varia">
+      <div class="duracion-calificacion">
+        <span *ngIf="pelicula.duracion_minutos > 0; else DuracionCapitulos">
+          <ion-icon name="time-outline"></ion-icon>
+          {{ pelicula.duracion_minutos }} minuto(s)
+        </span>
+        <ng-template #DuracionCapitulos>
+          <ion-icon name="time-outline"></ion-icon>
+          {{ pelicula.duracion_capitulos }} minuto(s) por Capítulo
+        </ng-template>
+        <span>
+          {{ pelicula.calificacion }}/10
+          <ion-icon name="star"></ion-icon>
+        </span>
+      </div>
+      <ion-icon class="favorito" name="heart-outline"></ion-icon>
+    </div>
+    <p class="descripcion">{{ pelicula.descripcion }}</p>
+    <section *ngIf="pelicula.duracion_capitulos > 0" id="temporadas">
+      <div class="temporada" *ngFor="let temporada of pelicula.temporadas">
+        <span>
+          <ion-icon name="caret-forward-outline"></ion-icon>
+          Temporada {{ temporada.numero }}
+        </span>
+        <span>{{ temporada.cantidad_capitulos }} Capitulo(s)</span>
+      </div>
+    </section>
+  </section>
+</ion-content>

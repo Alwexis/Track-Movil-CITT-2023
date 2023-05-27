@@ -1,0 +1,51 @@
+#contenedor-imagen {
+    background-color: black;
+    ion-img {
+        height: 20rem;
+    }
+}
+
+#contenedor-informacion {
+    margin: 1rem;
+    .titulo {
+        font-size: 2rem;
+    }
+    .contenedor-info-varia {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .duracion-calificacion {
+            color: lightgray;
+            span {
+                &:first-child {
+                    margin-right: 12px;
+                }
+                &:last-child {
+                    margin-left: 12px;
+                    ion-icon {
+                        fill: yellow;
+                    }
+                }
+            }
+        }
+        .favorito {
+            font-size: 2rem;
+        }
+    }
+    .descripcion {
+        font-style: italic;
+        margin: 2rem 0;
+    }
+    #temporadas {
+        .temporada {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 2rem;
+            padding: 1rem 1rem;
+            margin: 0.6rem 0;
+            border: 1px solid lightgray;
+            width: 100%;
+        }
+    }
+}

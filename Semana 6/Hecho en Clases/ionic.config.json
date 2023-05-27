@@ -1,0 +1,7 @@
+{
+  "name": "Semana6",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

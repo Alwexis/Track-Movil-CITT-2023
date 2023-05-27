@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Ñetfliz
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <section>
+    <div class="metraje" *ngFor="let metraje of peliculas">
+      <ion-img (click)="changePage(metraje.titulo)" src="{{metraje.poster}}"></ion-img>
+      <div class="contenido">
+        <div class="informacion">
+          <span class="titulo">{{ metraje.titulo }}</span>
+          <span *ngIf="metraje.duracion_minutos > 0; else DuracionCapitulo" class="duracion">Duración {{ metraje.duracion_minutos }} minutos</span>
+          <ng-template #DuracionCapitulo>
+            <span class="duracion">Duración {{ metraje.duracion_capitulos }} minutos por capitulo</span>            
+          </ng-template>
+        </div>
+        <ion-icon name="heart-outline"></ion-icon>
+      </div>
+    </div>
+  </section>
+</ion-content>
