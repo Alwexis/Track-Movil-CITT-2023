@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <section id="pokemon-wrapper">
+    <figure class="pokemon" *ngFor="let pokemon of pokemons">
+      <img src="{{ pokemon.imagen }}">
+      <figcaption>
+        <span class="pokemon-nombre">{{ pokemon.nombre }}</span>
+        <div class="altura-peso">
+          <span><ion-icon name="podium-outline"></ion-icon> Altura {{ pokemon.altura }}</span>
+          <span><ion-icon name="server-outline"></ion-icon> Peso {{ pokemon.peso }}</span>
+        </div>
+      </figcaption>
+    </figure>
+  </section>
+</ion-content>
