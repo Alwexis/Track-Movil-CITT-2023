@@ -18,58 +18,58 @@
           <img *ngFor="let attachment of publicacion.attachments" src="{{ attachment }}">
         </div>
       </div>
-      <span class="date">
+      <div class="date">
         <ion-icon name="calendar-outline"></ion-icon>
         {{ publicacion.formattedDate }}
-      </span>
+      </div>
     </section>
   </ion-list>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="modalPosteo = true">
+    <ion-fab-button (click)="modalPostear = true">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
 
-<ion-modal mode="ios" [isOpen]="modalPosteo">
+<ion-modal mode="ios" [isOpen]="modalPostear">
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-button color="danger" (click)="modalPosteo = false">Cancelar</ion-button>
-        </ion-buttons>
         <ion-title>Modal</ion-title>
+        <ion-buttons slot="end">
+          <ion-button color="danger" (click)="modalPostear = false">Cerrar</ion-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <form (ngSubmit)="post()" #FormularioPosteo="ngForm">
+      <form (ngSubmit)="crearPost()" #FormularioPosteo="ngForm">
         <div>
           <ion-item>
-            <ion-input required [(ngModel)]="postData.user" name="user"
-              label="¿Quién eres?" labelPlacement="stacked"
-              placeholder="Pepito123"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input required [(ngModel)]="postData.title" name="title"
-              label="Título" labelPlacement="stacked" placeholder="Presentación"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input required [(ngModel)]="postData.content" name="content"
-              label="Comparte tus ideas" labelPlacement="stacked"
-              placeholder="Hoy me ocurrió esto..."></ion-input>
+            <ion-input required [(ngModel)]="postData.user" name="user" label="¿Quién eres?" labelPlacement="stacked" placeholder="Ingresa tu Usuario"></ion-input>
           </ion-item>
           <ion-item class="file-input">
-            <input #fileInput type="file" [(ngModel)]="postData.attachments"
-              name="attachments" label="Subir imágenes" labelPlacement="stacked">
+            <input #iconInput type="file" [(ngModel)]="postData.icon" name="icon">
+            <ion-label (click)="iconInput.click()">
+              <ion-icon name="person-outline"></ion-icon>
+              <span>Agrega Foto Perfil</span>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-input required [(ngModel)]="postData.title" name="title" label="Título de tu Post" labelPlacement="stacked" placeholder="Ingresa el Título de tu Post"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-textarea required [(ngModel)]="postData.content" name="content" labelPlacement="stacked" label="Comparte tus ideas" placeholder="Hoy se me ocurrió tal cosa..."></ion-textarea>
+          </ion-item>
+          <ion-item class="file-input">
+            <input #fileInput type="file" (change)="fileChange($event)" multiple>
             <ion-label (click)="fileInput.click()">
               <ion-icon name="images-outline"></ion-icon>
               <span>Agrega imágenes</span>
             </ion-label>
           </ion-item>
         </div>
-        <ion-button [disabled]="FormularioPosteo.invalid" type="submit"
-          color="primary" expand="block" fill="clear" shape="round">
+        <ion-button [disabled]="FormularioPosteo.invalid" type="submit" color="primary" expand="block" fill="clear" shape="round">
           Postear
         </ion-button>
       </form>

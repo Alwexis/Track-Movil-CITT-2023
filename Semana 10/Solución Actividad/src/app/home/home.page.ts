@@ -8,12 +8,12 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  modalPosteo: boolean = false;
+  modalPostear: boolean = false;
   postData: any = {
     user: '',
     title: '',
     content: '',
-    attachments: []
+    attachments: undefined
   }
   publicaciones: any = [];
 
@@ -28,31 +28,35 @@ export class HomePage implements OnInit {
     for (let publicacion of publicaciones) {
       const fecha = new Date(publicacion.date);
       const dia = fecha.getUTCDate();
-      const mesNumero = fecha.getUTCMonth() + 1; // Se suma 1 porque los meses en JavaScript van de 0 a 11
+      const mesNumero = fecha.getUTCMonth();
       const mes = mesNumero < 10 ? `0${mesNumero}` : mesNumero.toString();
       const año = fecha.getUTCFullYear();
       publicacion.formattedDate = `${dia}/${mes}/${año}`;
     }
     let now: any = new Date();
     this.publicaciones = publicaciones;
-    this.publicaciones.sort((a: any, b: any) => {
-      const diferenciaA = Math.abs(new Date(a.date) as any - now);
-      const diferenciaB = Math.abs(new Date(b.date) as any - now);
-      return diferenciaA - diferenciaB;
+    this.publicaciones.sort((valor1: any, valor2: any) => {
+      const diferenciaValor1 = Math.abs(new Date(valor1.date) as any - now);
+      const diferenciaValor2 = Math.abs(new Date(valor2.date) as any - now);
+      return diferenciaValor1 - diferenciaValor2;
     });
+    console.log(this.publicaciones)
   }
 
-  async post() {
-    if (this.postData.attachments) {
-      for await (let file of this.postData.attachments) {
-        let b64 = await this.getBase64(file);
-        this.postData.attachments.push(b64);
-      }
+  async crearPost() {
+    const response = await firstValueFrom(this._http.post('https://citt2023.up.railway.app/twitter', this.postData))
+    console.log(response);
+    this.postData = { user: '', title: '', content: '', attachments: undefined };
+    this.modalPostear = false;
+  }
+
+  async fileChange(e: any) {
+    const b64Images = [];
+    for await (let file of e.target.files) {
+      let b64 = await this.getBase64(file);
+      b64Images.push(b64);
     }
-    const response = await firstValueFrom(this._http.post('https://citt2023.up.railway.app/twitter', this.postData));
-    this.postData = { user: '', title: '', content: '', attachments: [] }
-    this.modalPosteo = false;
-    console.log(response)
+    this.postData.attachments = b64Images;
   }
 
   getBase64(file: File) {
@@ -63,5 +67,4 @@ export class HomePage implements OnInit {
       reader.onerror = error => reject(error);
     });
   }
-
 }
