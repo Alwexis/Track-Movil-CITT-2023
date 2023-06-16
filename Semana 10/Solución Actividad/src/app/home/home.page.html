@@ -1,78 +1,82 @@
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-list>
-    <section *ngFor="let publicacion of publicaciones" class="publicacion">
-      <div class="user">
-        <img src="{{ publicacion.icon }}">
-        <span>{{ publicacion.user }}</span>
-      </div>
-      <div class="content">
-        <span>{{ publicacion.title }}</span>
-        <p>{{ publicacion.content }}</p>
-      </div>
-      <div *ngIf="publicacion.attachments && publicacion.attachments.length > 0" class="attachments">
-        <span>
-          <ion-icon name="images-outline"></ion-icon>
-          Adjunto(s)
-        </span>
-        <div>
-          <img *ngFor="let attachment of publicacion.attachments" src="{{ attachment }}">
-        </div>
-      </div>
-      <div class="date">
-        <ion-icon name="calendar-outline"></ion-icon>
-        {{ publicacion.formattedDate }}
-      </div>
-    </section>
-  </ion-list>
+    <ion-list>
+        <section *ngFor="let publicacion of publicaciones" class="publicacion">
+            <div class="user">
+                <img src="{{ publicacion.icon }}">
+                <span>{{ publicacion.user }}</span>
+            </div>
+            <div class="content">
+                <span>{{ publicacion.title }}</span>
+                <p>{{ publicacion.content }}</p>
+            </div>
+            <div *ngIf="publicacion.attachments && publicacion.attachments.length > 0" class="attachments">
+                <span>
+                    <ion-icon name="images-outline"></ion-icon>
+                    Adjunto(s)
+                </span>
+                <div>
+                    <img *ngFor="let attachment of publicacion.attachments" src="{{ attachment }}">
+                </div>
+            </div>
+            <span class="date">
+                <ion-icon name="calendar-outline"></ion-icon>
+                {{ publicacion.formattedDate }}
+            </span>
+        </section>
+    </ion-list>
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="modalPostear = true">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+        <ion-fab-button (click)="modalPublicacion = true">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>
 
-<ion-modal mode="ios" [isOpen]="modalPostear">
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Modal</ion-title>
-        <ion-buttons slot="end">
-          <ion-button color="danger" (click)="modalPostear = false">Cerrar</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <form (ngSubmit)="crearPost()" #FormularioPosteo="ngForm">
-        <div>
-          <ion-item>
-            <ion-input required [(ngModel)]="postData.user" name="user" label="¿Quién eres?" labelPlacement="stacked" placeholder="Ingresa tu Usuario"></ion-input>
-          </ion-item>
-          <ion-item class="file-input">
-            <input #iconInput type="file" [(ngModel)]="postData.icon" name="icon">
-            <ion-label (click)="iconInput.click()">
-              <ion-icon name="person-outline"></ion-icon>
-              <span>Agrega Foto Perfil</span>
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-input required [(ngModel)]="postData.title" name="title" label="Título de tu Post" labelPlacement="stacked" placeholder="Ingresa el Título de tu Post"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-textarea required [(ngModel)]="postData.content" name="content" labelPlacement="stacked" label="Comparte tus ideas" placeholder="Hoy se me ocurrió tal cosa..."></ion-textarea>
-          </ion-item>
-          <ion-item class="file-input">
-            <input #fileInput type="file" (change)="fileChange($event)" multiple>
-            <ion-label (click)="fileInput.click()">
-              <ion-icon name="images-outline"></ion-icon>
-              <span>Agrega imágenes</span>
-            </ion-label>
-          </ion-item>
-        </div>
-        <ion-button [disabled]="FormularioPosteo.invalid" type="submit" color="primary" expand="block" fill="clear" shape="round">
-          Postear
-        </ion-button>
-      </form>
-    </ion-content>
-  </ng-template>
+<ion-modal [isOpen]="modalPublicacion">
+    <ng-template>
+        <ion-header>
+            <ion-toolbar>
+                <ion-title>Modal</ion-title>
+                <ion-buttons slot="end">
+                    <ion-button color="danger" (click)="modalPublicacion = false">Cancelar</ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+            <form (ngSubmit)="crearPost()" #FormularioPost="ngForm">
+                <div>
+                    <ion-item>
+                        <ion-input required [(ngModel)]="postData.user" name="user"
+                        label="Ingresa tu Usuario" labelPlacement="stacked"
+                        placeholder="Pepito123..."></ion-input>
+                    </ion-item>
+                    <ion-item class="file-input">
+                        <input (change)="onImageChange($event, 'icon')" #iconInput type="file" multiple>
+                        <ion-label (click)="iconInput.click()">
+                            <ion-icon name="person-outline"></ion-icon>
+                            <span>¿Foto de Perfil?</span>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-input required [(ngModel)]="postData.title" name="title"
+                        label="Título de tu Post" labelPlacement="stacked"
+                        placeholder="Presentación..."></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-textarea required [(ngModel)]="postData.content" name="content" label="¿Qué quieres publicar?" placeholder="Hoy me encontré un..."></ion-textarea>
+                    </ion-item>
+                    <ion-item class="file-input">
+                        <input (change)="onImageChange($event, 'attachments')" #attachmentInput type="file" multiple>
+                        <ion-label (click)="attachmentInput.click()">
+                            <ion-icon name="image-outline"></ion-icon>
+                            <span>¿Agregar imágenes?</span>
+                        </ion-label>
+                    </ion-item>
+                </div>
+                <ion-button [disabled]="FormularioPost.invalid" type="submit" expand="block" fill="clear" shape="round">
+                    Postear
+                </ion-button>
+            </form>
+        </ion-content>
+    </ng-template>
 </ion-modal>
