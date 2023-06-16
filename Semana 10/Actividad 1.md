@@ -33,6 +33,7 @@ getBase64(file: File) {
 - [Componentes Ionic](https://ionicframework.com/docs/)
 - [API del Track](https://citt2023.up.railway.app/twitter)
 - [Solución a Actividad](https://github.com/Alwexis/Track-Movil-CITT-2023/tree/main/Semana%2010/Solución%20Actividad)
+- [Vídeo Solución a Actividad](https://www.youtube.com/watch?v=udKkP59yb0Y)
 
 #### Imagen de Referencia
 ![image](https://github.com/Alwexis/Track-Movil-CITT-2023/assets/51482182/6524b630-af88-46bf-bbcc-d80ac7dc5e15)
