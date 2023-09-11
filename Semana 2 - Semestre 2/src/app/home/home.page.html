@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-input [(ngModel)]="nombre_usuario" name="usuario" label="Nombre" labelPlacement="stacked" placeholder="Enter text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-textarea [(ngModel)]="mensaje" name="mensaje" label="Mensaje" labelPlacement="stacked" placeholder="Enter text"></ion-textarea>
+  </ion-item>
+  <ion-button (click)="sendMessage()" expand="block" fill="clear" shape="round">
+    Enviar Mensaje
+  </ion-button>
+  <ion-list>
+    <ion-item *ngFor="let msg of mensajes">
+      <ion-label>
+        <span>
+          {{ msg.usuario }}
+        </span>
+        <p>{{ msg.mensaje }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
